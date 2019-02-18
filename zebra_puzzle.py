@@ -1,29 +1,78 @@
-# -*- coding: utf-8 -*-
+import itertools
+
+def imright(h1, h2):
+    "House h1 is immediately right of h2 if h1-h2 == 1."
+    return h1-h2 == 1
+
+def nextto(h1, h2):
+    "Two houses are next to each other if they differ by 1."
+    return abs(h1-h2) == 1
+
+def zebra_puzzle2():
+    "Return a tuple (WATER, ZEBRA indicating their house numbers."
+    houses = first, _, middle, _, _ = [1, 2, 3, 4, 5]
+    orderings = list(itertools.permutations(houses)) # 1
+    return next((WATER, ZEBRA)
+                for (red, green, ivory, yellow, blue) in c(orderings)
+                for (Englishman, Spaniard, Ukranian, Japanese, Norwegian) in c(orderings)
+                for (coffee, tea, milk, oj, WATER) in c(orderings)
+                for (OldGold, Kools, Chesterfields, LuckyStrike, Parliaments) in c(orderings)
+                for (dog, snails, fox, horse, ZEBRA) in c(orderings)
+               	if imright(green, ivory)
+                if Englishman is red
+                if Norwegian is first
+                if nextto(Norwegian, blue)
+                if coffee is green
+                if Ukranian is tea
+                if milk is middle
+                if Kools is yellow
+                if LuckyStrike is oj
+                if Japanese is Parliaments
+                if Spaniard is dog
+                if OldGold is snails
+                if nextto(Chesterfields, fox)
+                if nextto(Kools, horse)
+                )
+
 
 def zebra_puzzle():
-    houses = [first,_,middle,_,_] = [1,2,3,4,5]
-    orderings = list(itertools.permutations(houses))
-    solutions = ((WATER,ZEBRA,[Englishman,Spaniard,Ukranian,Japanese,Norwegian])
-        for(red, green, ivory, yellow, blue) in orderings
-        if imright(green, ivory)        #6
-        for (Englishman, Spaniard, Ukranian, Japanese, Norwegian) in orderings
-        if Englishman is red            #2
-        if Norwegian is first           #10
-        if nextto(Norwegian, blue)      #15
-        for (cofee, tea, milk, oj, WATER) in orderings
-        if cofee is green               #4
-        if Ukranian is tea              #5
-        if milk is middle               #9
-        for (OldGold, Kools, Chesterfields, LuckyStrike, Parliaments) in orderings
-        if Kools is yellow              #8
-        if LuckyStrike is oj            #13
-        if Japanese is Parliaments      #14
-        for (dog, snails, fox, horse, ZEBRA) in orderings
-        if Spaniard is dog              #3
-        if OldGold is snails            #7
-        if nextto(Chesterfields, fox)
-        if nextto(Kools, horse)
-    )
-    water, zebra, people = next(solutions)
-    nat = 'Englishman Spaniard Ukrainian Japanese Norwegian'.split(' ')
-    return (nat[people.index(water)], nat[people.index(zebra)]) 
+    "Return a tuple (WATER, ZEBRA indicating their house numbers."
+    houses = first, _, middle, _, _ = [1, 2, 3, 4, 5]
+    orderings = list(itertools.permutations(houses)) # 1
+    return next((WATER, ZEBRA)
+                for (red, green, ivory, yellow, blue) in c(orderings)
+                if imright(green, ivory)
+                for (Englishman, Spaniard, Ukranian, Japanese, Norwegian) in c(orderings)
+                if Englishman is red
+                if Norwegian is first
+                if nextto(Norwegian, blue)
+                for (coffee, tea, milk, oj, WATER) in c(orderings)
+                if coffee is green
+                if Ukranian is tea
+                if milk is middle
+                for (OldGold, Kools, Chesterfields, LuckyStrike, Parliaments) in c(orderings)
+                if Kools is yellow
+                if LuckyStrike is oj
+                if Japanese is Parliaments
+                for (dog, snails, fox, horse, ZEBRA) in c(orderings)
+                if Spaniard is dog
+                if OldGold is snails
+                if nextto(Chesterfields, fox)
+                if nextto(Kools, horse)
+                )
+
+def c(sequence):
+	c.starts += 1
+	for item in sequence:
+		c.items += 1
+		yield item
+
+def instrument_fn(fn, *args):
+	c.starts, c.items = 0, 0
+	result = fn(*args)
+	print "%s got %s %5d iters over %7d items" % (fn.__name__, result, c.starts, c.items)
+
+instrument_fn(zebra_puzzle)
+
+#instrument_fn(zebra_puzzle2)
+#would take a long time
